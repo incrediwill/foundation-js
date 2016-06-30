@@ -2905,51 +2905,28 @@ function CalculatorPopulateField(obj, defaultValue) {
 	}
 }
 
-
+// CUSTOM TEMPLATE FUNCTIONS UNTIL VERSION 1 DROPS
 (function($){
+
+	// SEARCH FLYOUT
+	$('#search-flyout-toggle').click(function() {
+		$('body').toggleClass('search-flyout-is-open');
+	});	
 	
-	/* BMW SEARCH  */
-	$(document).on('click', function(event) {
-		if (!$(event.target).closest('#header-search-dropdown').length) { $body.toggleClass('header-search-dropdown-open', false); }
-	});
-
-	var $headerSearchDropdown = $('#header-search-dropdown'),
-		$body = $('body');
-		
-		$("#header-search-dropdown-trigger").click(function(e){
-			$body.toggleClass('header-search-dropdown-open');				
-			if ($body.hasClass('header-search-dropdown-open')){
-				$headerSearchDropdown.find('input').focus();
+	$('#search-flyout-close').click(function() {
+		$('body').toggleClass('search-flyout-is-open');
+	});	
+	
+	// ESC KEY
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) {
+			if ($('body').hasClass('search-flyout-is-open')) {
+				$('body').toggleClass('search-flyout-is-open');
 			}
-			e.stopPropagation();
-			e.preventDefault();
-		});
-
-})(jQuery);
-
-
-/* ------------------
-	Search Flyout
------------------------------------------------------------- */
-$('#search-flyout-toggle').click(function() {
-	$('body').toggleClass('search-flyout-is-open');
-});	
-
-$('#search-flyout-close').click(function() {
-	$('body').toggleClass('search-flyout-is-open');
-});	
-
-// Esc Key
-$(document).keyup(function(e) {
-     if (e.keyCode == 27) {
-		if ($('body').hasClass('search-flyout-is-open')) {
-			$('body').toggleClass('search-flyout-is-open');
 		}
-    }
-});
+	});
 	
-(function($){
-	
+	// BMW SEARCH
 	$(document).on('click', function(event) {
 		if (!$(event.target).closest('#header-search-dropdown').length) { $body.toggleClass('header-search-dropdown-open', false); }
 	});
@@ -2957,13 +2934,40 @@ $(document).keyup(function(e) {
 	var $headerSearchDropdown = $('#header-search-dropdown'),
 		$body = $('body');
 		
-		$("#header-search-dropdown-trigger").click(function(e){
-			$body.toggleClass('header-search-dropdown-open');				
-			if ($body.hasClass('header-search-dropdown-open')){
-				$headerSearchDropdown.find('input').focus();
-			}
-			e.stopPropagation();
-			e.preventDefault();
-		});
-
+	$("#header-search-dropdown-trigger").click(function(e){
+		$body.toggleClass('header-search-dropdown-open');				
+		if ($body.hasClass('header-search-dropdown-open')){
+			$headerSearchDropdown.find('input').focus();
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	});
+		
+        // BS MODAL iOS FIX
+        if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
+            $('.modal').on('show.bs.modal', function() {
+                // Position modal absolute and bump it down to the scrollPosition
+                $(this)
+			.css({
+				position: 'absolute',
+				marginTop: $(window).scrollTop() + 'px',
+				bottom: 'auto'
+			});
+                // Position backdrop absolute and make it span the entire page
+                //
+                setTimeout( function() {
+			$('.modal-backdrop').css({
+				position: 'absolute', 
+				top: 0, 
+				left: 0,
+				width: '100%',
+				height: Math.max(
+					document.body.scrollHeight, document.documentElement.scrollHeight,
+					document.body.offsetHeight, document.documentElement.offsetHeight,
+					document.body.clientHeight, document.documentElement.clientHeight
+				) + 'px'
+			});
+                }, 0);
+            });
+        }
 })(jQuery);
