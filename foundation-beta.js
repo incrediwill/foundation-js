@@ -2972,31 +2972,27 @@ function CalculatorPopulateField(obj, defaultValue) {
         }
     
     // Slide Disclaimer    
-	(function($) {
-		
-		var $sliderDisclaimer = $('.slide-disclaimer-btn');
-		
-			$sliderDisclaimer.each(function() {
-				var element = $(this),
-					elementOpenText = element.attr('data-open-text'),
-					elementCloseText = element.attr('data-close-text');
-				var is_visible = false;
-				
-				$('.slide-disclaimer').prev('.slider-disclaimer-btn').append('<a href="#" class="slide-disclaimer-link">'+$elementOpenText+'</a>');
-				
-				$('.slide-disclaimer').hide();
-				
-				$('.slide-disclaimer-link').click(function() {
-					 
-				    $(this).html( ($(this).parent().next('.slide-disclaimer').is(":visible")) ? $elementOpenText : $elementCloseText);
-				
-					$(this).parent().next('.slide-disclaimer').toggle();
-					 
-					return false;
-					 
-				});
-
+	var $sliderDisclaimer = $('.slide-disclaimer-btn');
+	
+		$sliderDisclaimer.each(function() {
+			var element = $(this),
+				elementOpenText = element.attr('data-open-text'),
+				elementCloseText = element.attr('data-close-text');
+			var is_visible = false;
+			
+			$('.slide-disclaimer').prev('.slider-disclaimer-btn').append('<a href="#" class="slide-disclaimer-link">'+$elementOpenText+'</a>');
+			
+			$('.slide-disclaimer').hide();
+			
+			$('.slide-disclaimer-link').click(function() {
+				 
+			    $(this).html( ($(this).parent().next('.slide-disclaimer').is(":visible")) ? $elementOpenText : $elementCloseText);
+			
+				$(this).parent().next('.slide-disclaimer').toggle();
+				 
+				return false;
+				 
 			});
 	
-	})(jQuery);	        
+		});
 })(jQuery);
