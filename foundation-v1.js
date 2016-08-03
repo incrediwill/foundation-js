@@ -730,7 +730,7 @@ var FOUNDATION = FOUNDATION || {};
 					var element = $(this),
 						elementImg = element.attr( 'data-lazyload' );
 
-					element.attr( 'src', 'images/blank.svg' ).css({ 'background': 'url(images/preloader.gif) no-repeat center center #FFF' });
+					//element.attr( 'src', 'images/blank.svg' ).css({ 'background': 'url(images/preloader.gif) no-repeat center center #FFF' });
 
 					element.appear(function () {
 						element.css({ 'background': 'none' }).removeAttr( 'width' ).removeAttr( 'height' ).attr('src', elementImg);
@@ -2378,7 +2378,6 @@ var FOUNDATION = FOUNDATION || {};
 					element.tabs({
 						active: Number(tabActive),
 						show: {
-							effect: "fade",
 							duration: Number(elementSpeed)
 						}
 					});
@@ -3401,7 +3400,7 @@ var FOUNDATION = FOUNDATION || {};
 			}
 
 			if( $().popover ) {
-				$('[data-toggle=popover]').popover();
+				$('[data-toggle=popover]').popover({html: true});
 			} else {
 				console.log('extras: Bootstrap Popover not defined.');
 			}
@@ -3667,6 +3666,236 @@ var FOUNDATION = FOUNDATION || {};
 	$window.on( 'resize', FOUNDATION.documentOnResize.init );
 
 })(jQuery);
+
+// CUSTOM TEMPLATE FUNCTIONS UNTIL VERSION 1 DROPS
+(function($){
+
+	// SEARCH FLYOUT
+	$('#search-flyout-toggle').click(function() {
+		$('body').toggleClass('search-flyout-is-open');
+	});	
+	
+	$('#search-flyout-close').click(function() {
+		$('body').toggleClass('search-flyout-is-open');
+	});	
+	
+	// ESC KEY
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) {
+			if ($('body').hasClass('search-flyout-is-open')) {
+				$('body').toggleClass('search-flyout-is-open');
+			}
+		}
+	});
+	
+	// BMW SEARCH
+	$(document).on('click', function(event) {
+		if (!$(event.target).closest('#header-search-dropdown').length) { $body.toggleClass('header-search-dropdown-open', false); }
+	});
+
+	var $headerSearchDropdown = $('#header-search-dropdown'),
+		$body = $('body');
+		
+	$("#header-search-dropdown-trigger").click(function(e){
+		$body.toggleClass('header-search-dropdown-open');				
+		if ($body.hasClass('header-search-dropdown-open')){
+			$headerSearchDropdown.find('input').focus();
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	});
+		
+        // BS MODAL iOS FIX
+        if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
+            $('.modal').on('show.bs.modal', function() {
+                // Position modal absolute and bump it down to the scrollPosition
+                $(this)
+			.css({
+				position: 'absolute',
+				marginTop: $(window).scrollTop() + 'px',
+				bottom: 'auto'
+			});
+                // Position backdrop absolute and make it span the entire page
+                //
+                setTimeout( function() {
+			$('.modal-backdrop').css({
+				position: 'absolute', 
+				top: 0, 
+				left: 0,
+				width: '100%',
+				height: Math.max(
+					document.body.scrollHeight, document.documentElement.scrollHeight,
+					document.body.offsetHeight, document.documentElement.offsetHeight,
+					document.body.clientHeight, document.documentElement.clientHeight
+				) + 'px'
+			});
+                }, 0);
+            });
+        }
+    
+	// Slide Disclaimer    
+	var elementOpenText = $('.slide-disclaimer-btn').attr('data-open-text');
+	var elementCloseText = $('.slide-disclaimer-btn').attr('data-close-text');
+	
+	//console.log (elementOpenText,elementCloseText);
+	
+	$('.slide-disclaimer-btn').append('<a href="#" class="slide-disclaimer-link">'+elementOpenText+'</a>');
+	
+	$('.slide-disclaimer').hide();
+	
+	$('.slide-disclaimer-link').click(function() {
+		 
+	    $(this).html( ($(this).parent().next('.slide-disclaimer').is(":visible")) ? elementOpenText : elementCloseText);
+	
+		$(this).parent().next('.slide-disclaimer').toggle();
+		 
+		return false;
+		 
+	});
+	
+
+	// Featured Vehicles Swiper Function 
+	// Incorporate into main functions... someday...
+    var swiper = new Swiper('.featured-vehicles-2', {
+        scrollbar: '.swiper-scrollbar',
+        scrollbarHide: false,
+        slidesPerView: 'auto',
+        centeredSlides: false,
+        spaceBetween: 40,
+        scrollbarDraggable: true,
+        grabCursor: true,
+        breakpoints: {
+            1600: {
+                spaceBetween: 40
+            },
+            1200: {
+                spaceBetween: 30
+            },
+            992: {
+                spaceBetween: 30
+            },
+            640: {
+                spaceBetween: 30
+            },
+            320: {
+                spaceBetween: 0
+            }
+        }                     
+    });
+    
+
+	// vdp-slideshow-1 
+	// Incorporate into main functions... someday...
+    var swiper = new Swiper('#vdp-slideshow-1 .swiper-container', {
+      autoHeight: true,
+      centeredSlides: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        loop: true,
+        slidesPerView: '4',
+        paginationClickable: false,
+        breakpoints: {
+            1800: {
+                slidesPerView: 3,
+                spaceBetween: 0
+            },
+            1300: {
+                slidesPerView: 2,
+                spaceBetween: 0
+            },
+            992: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            640: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            }
+        }
+    });
+    
+    
+      var swiperPhotos = new Swiper('#vdp-slideshow-2 .swiper-photos', {
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          autoHeight: 'true',
+      spaceBetween: 0,
+          loop: false,
+      });
+      var swiperPhotosThumbs = new Swiper('#vdp-slideshow-2 .swiper-photos-thumbs', {
+      spaceBetween: 12,
+      centeredSlides: true,
+      grabCursor: false,
+      slidesPerView: 6,
+      slideToClickedSlide: true,
+          loop: false,
+          breakpoints: {
+              1300: {
+                  slidesPerView: 6,
+                  spaceBetween: 12
+              },
+              992: {
+                  slidesPerView: 6,
+                  spaceBetween: 14
+              },
+              640: {
+                  slidesPerView: 5,
+                  spaceBetween: 14
+              },
+              320: {
+                  slidesPerView: 3,
+                  spaceBetween: 10
+              }
+          }                         
+      });                         
+      var swiperVideos = new Swiper('#vdp-slideshow-2 .swiper-video', {
+        autoHeight: false,
+        centeredSlides: false,
+          nextButton: '.swiper-button-next.video',
+          prevButton: '.swiper-button-prev.video',
+          loop: false,
+          slidesPerView: '1',
+          paginationClickable: false
+      });
+      
+      swiperPhotos.params.control = swiperPhotosThumbs;
+      swiperPhotosThumbs.params.control = swiperPhotos;    
+    
+    
+	function newVehicles() {
+		listControl();					
+		$(window).resize(function() {
+			listControl();
+		});
+		function listControl (){
+			var windowWidth = $(window).width();
+			if(windowWidth < 767){
+				$('.list-menu .has-children').each(function() {
+					$('.dropdown-toggle').attr('data-toggle', 'collapse');
+					$('.has-children > ul').addClass("collapse");
+					$(".dropdown-toggle").attr("role", "button");								
+				});					
+			} else {
+				$('.list-menu .has-children').each(function() {
+					$('.dropdown-toggle').removeAttr('data-toggle', 'collapse');
+					$('.has-children > ul').removeClass('collapse');
+					$('.has-children > ul').removeClass('in');
+					$('.has-children > ul').css('height', 'auto');
+					$('.dropdown-toggle').removeAttr('role', 'button');
+					$('.list-group .dropdown-toggle-temp').remove();																						
+				});		
+			}							
+		}		
+	}		
+	
+	newVehicles();	
+
+})(jQuery);
+
 
 function flashLoader(e, t, a, n, r, i, o, c, s) { var l = "", d = ""; if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) "Footer" == c && -1 != e.indexOf("ebiz_footer_logo") && document.write('<div style="font: italic bold 10px Arial; margin-top: 2px;">eBizAutos</div>'); else { if (-1 != t.indexOf("ssl=true") || -1 != e.indexOf("https://") ? (d = "https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0", l = "https://www.macromedia.com/go/getflashplayer") : (d = "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0", l = "http://www.macromedia.com/go/getflashplayer"), document.write('<object type="application/x-shockwave-flash" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="' + d + '" width="' + n + '" height="' + a + '" id="' + c + '" align="' + r + '">'), document.write('<param name="flashvars" value="' + t + '">'), document.write('<param name="movie" value="' + e + '">'), document.write('<param name="quality" value="' + i + '">'), null == s) var s = "", h = ""; else { document.write('<param name="scale" value="' + s + '">'); var h = ' scale="' + s + '"' } document.write('<param name="bgcolor" value="' + o + '">'), document.write('<param name="wmode" value="transparent">'), document.write('<param name="allowscriptaccess" value="always">'), document.write('<embed src="' + e + '" quality="' + i + '"' + h + ' bgcolor="' + o + '"  width="' + n + '" height="' + a + '" name="' + c + '" align="' + r + '" TYPE="application/x-shockwave-flash" pluginspage="' + l + '" flashvars="' + t + '" wmode="transparent" allowscriptaccess="always"></embed>'), document.write("</object>") } } function getValue(e) { return null == e ? "" : e } function isTouchDevice() { return !!("ontouchstart" in window) } function OpenWindow(e, t, a, n) { "undefined" != typeof wl_bj_pre && (e = wl_bj_pre + e), window.open(e, t, "width=" + a + ",height=" + n) } function OpenWindowResizable(e, t, a, n) { "undefined" != typeof wl_bj_pre && (e = wl_bj_pre + e), window.open(e, t, "width=" + a + ",height=" + n + ",resizable=1") } function OpenWindowCenter(e, t, a, n, r, i, o) { null != _popupObject && _popupObject.close(); var c = ""; r && (c += "scrollbars=yes, ", a += 16); var s = document.all ? window.screenLeft : window.screen.left, l = s + (window.screen.width - a) / 2, d = (window.screen.height - n) / 2; c += "width=" + a + ", height=" + n, c += ", top=" + d + ", left=" + l, "undefined" != typeof wl_bj_pre && (e = wl_bj_pre + e), popupWin = OpenWindowGADecorated(e, t, c), null != popupWin && popupWin.focus() } function OpenWindowCenterFrameOnly(e, t, a, n, r) { var i = 10; if (null != _popupObject && _popupObject.close(), -1 == e.indexOf("embedded=true")) { var o = ""; r && (o += "scrollbars=yes, ", a += 16); var c = document.all ? window.screenLeft : window.screen.left, s = c + (window.screen.width - a) / 2, l = (window.screen.height - n) / 2; o += "width=" + a + ", height=" + n, o += ", top=" + l + ", left=" + s, "undefined" != typeof wl_bj_pre && (e = wl_bj_pre + e), popupWin = OpenWindowGADecorated(e, t, o), null != popupWin && popupWin.focus() } else { _width = a, _height = n, _openedUrl = e; var d = '<div class="ClosePopupBtn" onmouseover="this.className=\'ClosePopupBtn_hover\'" onmouseout="this.className=\'ClosePopupBtn\'"><b></b></div><iframe src="" frameborder="0" scrolling="no" width="' + _width + '" height="' + _height + '"></iframe>', s = ""; (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) && (s = (window.innerWidth - a) / 2), IsIEQuirksMode() && (s = (document.body.clientWidth - a) / 2), _popupObject = $('<div id="popUpContent"></div>').modal({ zIndex: 2e4, close: !0, fixed: !1, containerCss: { width: _width, height: _height }, containerId: "PopupLoaderContainer", position: [i, s] }), $("#popUpContent").html(d), OpeniFrameGADecorated("#popUpContent iframe", e), $("#simplemodal-overlay, .ClosePopupBtn").bind("click.simplemodal", function (e) { e.preventDefault(), null != document.getElementById("_extIntViewContainer") && (document.getElementById("_extIntViewContainer").style.visibility = "visible"), _popupObject.close() }) } } function ReplaceLiterals(e) { return e ? e.replace(/\\/g, "\\\\").replace(/\'/g, "\\'") : "" } function closeSelf() { window.open("", "_parent", ""), window.opener = top, window.close() } function checkEmail(e) { var t = e.value; return checkEmailStr(t) } function checkEmailStr(e) { return /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))$/.test(trim(e)) ? !0 : !1 } function checkEmpty(e) { return e.value.length > 0 ? !0 : !1 } function checkAllowedChars(e) { return null != e ? !metaCharacters.test(e.value) : !1 } function checkDate(e) { var t; return t = null != e.value ? e.value : null != e.val() ? e.val() : e, /^([1-9]|0[1-9]|1[012]|)[- \/.]([1-9]|0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d$/.test(t) ? !0 : !1 } function trim(e) { var t, a; for (t = 0, a = e.length - 1, e = e.split("") ; t < e.length && " " == e[t];) e[t] = "", t++; for (; a > 0 && " " == e[a];) e[a] = "", a--; return e.join("") } function IEVersionDetector() { if (-1 != navigator.userAgent.indexOf("MSIE 7.0") && -1 == navigator.userAgent.indexOf("Trident")) return 7; if (-1 != navigator.userAgent.indexOf("MSIE 8.0") || -1 != navigator.userAgent.indexOf("Trident/4.0")) return 8; if (-1 != navigator.userAgent.indexOf("MSIE 9.0") || -1 != navigator.userAgent.indexOf("Trident/5.0")) return 9; if (-1 != navigator.userAgent.indexOf("MSIE 10.0") || -1 != navigator.userAgent.indexOf("Trident/6.0")) return 10; if ("Netscape" == navigator.appName) { var e = -1, t = navigator.userAgent, a = new RegExp("Trident/.*rv:([0-9]{1,}[.0-9]{0,})"); if (null != a.exec(t) && (e = parseInt(RegExp.$1)), -1 != e) return 11 } return 0 } function IsIEQuirksMode() { return IEVersionDetector() > 0 && "BackCompat" == document.compatMode } function googleMapSubmit() { s0 = document.getElementById("tmpAddr"), s1 = document.getElementById("tmpAddr1"), s2 = document.getElementById("tmpAddr2"), s0.value = s1.value + ", " + s2.value } function isIE6() { var e = 0; if (-1 != navigator.appVersion.indexOf("MSIE")) { var t = navigator.appVersion.split("MSIE"); e = parseFloat(t[1]) } return 6 == e ? !0 : !1 } function IsEmpty(e) { return null == e ? !1 : 0 == e.value.length } function OpenPrintModal() { var e, t = ""; IsIEQuirksMode() && (t = (document.body.clientWidth - $("#PrintModalContent").width()) / 2), e = $("#PrintModalContent").modal({ zIndex: 2e4, close: !0, fixed: !1, position: [20, t] }), $("#simplemodal-overlay, .ClosePopup").bind("click.simplemodal", function (t) { t.preventDefault(), e.close() }) } function hideLinksPopup() { isActive || isActiveLinks ? timeId = setTimeout(hideLinksPopup, 200) : ($(".SocialLinksPopup").hide(), hasSocialRoundedButtons ? $(".SocialLinksIcons").css("background", "url(http://images.ebizautos.com/gallery/bookmarking_new/plus.png)") : $(".SocialLinksIcons").css("background", "url(http://images.ebizautos.com/gallery/bookmarking_square/plus.png)")) } function showLinksPopup(e) { $(".SocialLinksPopup", e).show(), hasSocialRoundedButtons ? $(e).css("background", "url(http://images.ebizautos.com/gallery/bookmarking_new/minus.png)") : $(e).css("background", "url(http://images.ebizautos.com/gallery/bookmarking_square/minus.png)") } function on_mouseoverSocialBookmarking(e, t) { isActive || (isActive = !0, "True" == e && (hasSocialRoundedButtons = !0), showLinksPopup(t)), clearTimeout(timeId), timeId = setTimeout(hideLinksPopup, 200) } function on_mouseoverLinks(e, t) { isActiveLinks || (isActiveLinks = !0, "True" == e && (hasSocialRoundedButtons = !0), showLinksPopup($(t).parent())), clearTimeout(timeId), timeId = setTimeout(hideLinksPopup, 200) } function on_mouseoutLinks() { isActiveLinks = !1, isActive = !1 } function ToggleNormal(e) { var t = e.className.indexOf("Hover"); t > 0 && (e.className = e.className.substr(0, t)) } function ToggleHover(e) { e.className = e.className + "Hover" } function ToggleHoverOrNormal(e) { var t = e.className.indexOf("Hover"); t > 0 ? e.className = e.className.substr(0, t) : e.className = e.className + "Hover" } function ToggleHoverOnMouseOut(e, t) { $.browser.msie ? isEqualOnMouseOut(e, t) && ToggleNormal(e) : ToggleNormal(e) } function isEqualOnMouseOut(e, t) { return e.parentNode == t.toElement || e.parentNode == t.toElement.parentNode || e.parentNode == t.toElement.childNodes[1] ? !0 : !1 } function OnMouseOverImg(e, t) { var a = document.getElementById(e), n = document.getElementById(e + "hover"); t ? (a.style.display = "none", n.style.display = "inline") : (a.style.display = "inline", n.style.display = "none") } function OnMouseOverSection(e, t, a) { var n = document.getElementById(e + "Body"); OnMouseOverImg(e + ("none" != n.style.display ? "Close" : "Open"), t), t ? "none" == n.style.display && (null != document.getElementById(e + "Hdr") && (document.getElementById(e + "Hdr").style.color = a), null != document.getElementById(e + "Text") && (document.getElementById(e + "Text").style.color = a)) : "none" == n.style.display && (null != document.getElementById(e + "Hdr") && (document.getElementById(e + "Hdr").style.color = ""), null != document.getElementById(e + "Text") && (document.getElementById(e + "Text").style.color = "")) } function onfocus_input(e, t, a) { var n = document.getElementById(t); a && (n.className = a), n.value == e && (n.value = "") } function onblur_input(e, t, a) { var n = document.getElementById(t); "" == n.value && (a && (n.className = a), n.value = e) } function select(e) { e.focus(), e.select() } function SwitchToLease(e) { var t = document.getElementById("_loanCalculator" + e); t.style.display = "none", t = document.getElementById("_leaseCalculator" + e), t.style.display = "block" } function SwitchToLoan(e) { var t = document.getElementById("_loanCalculator" + e); t.style.display = "block", t = document.getElementById("_leaseCalculator" + e), t.style.display = "none" } function onQQinput_focus(e, t) { (e.value == ConstErrorString || e.value == ConstRequiredString || e.value == ConstZipCodeErrorString || void 0 != t && e.value == t) && (e.value = ""), e.style.color = "" } function ShowHideSection(e, t, a) { var n = document.getElementById(a + e + "Body"); if (n) { null == t && (t = "none" == n.style.display); var r = "inline" == document.getElementById(a + e + "Closehover").style.display || "inline" == document.getElementById(a + e + "Openhover").style.display; t ? (n.style.display = "block", r ? (document.getElementById(a + e + "Closehover").style.display = "inline", document.getElementById(a + e + "Openhover").style.display = "none", document.getElementById(a + e + "Close").style.display = "none", document.getElementById(a + e + "Open").style.display = "none") : (document.getElementById(a + e + "Closehover").style.display = "none", document.getElementById(a + e + "Openhover").style.display = "none", document.getElementById(a + e + "Close").style.display = "inline", document.getElementById(a + e + "Open").style.display = "none")) : (n.style.display = "none", r ? (document.getElementById(a + e + "Closehover").style.display = "none", document.getElementById(a + e + "Openhover").style.display = "none", document.getElementById(a + e + "Close").style.display = "none", document.getElementById(a + e + "Open").style.display = "inline") : (document.getElementById(a + e + "Closehover").style.display = "none", document.getElementById(a + e + "Openhover").style.display = "none", document.getElementById(a + e + "Close").style.display = "none", document.getElementById(a + e + "Open").style.display = "inline")) } } function SwitchSection(e, t, a) { if ("none" == document.getElementById(a + e + "Body").style.display) for (i = 1; i <= t; i++) ShowHideSection(i, i == e, a); else ShowHideSection(e, !1, a) } function setDisableBtn(e) { $(e).css({ opacity: .5 }) } function setEnableBtn(e) { $(e).css("opacity", "") } function isDisableBtn(e) { return .5 == $(e).css("opacity") ? !0 : !1 } function isValidEmail(e) { return $("#EmailMessageContainer").empty(), checkEmailStr(e) && 0 != e.length ? !0 : (0 == e.length ? $("#EmailMessageContainer").append("<br />* Please fill out Email Address.") : checkEmailStr(e) || $("#EmailMessageContainer").append("<br />* Email address has wrong format."), $("#ErrorMessageBox").show(), !1) } function IsValueValid(e) { var t = /^[^<>\\]*$/; return t.test(e) } function IsYearValid(e) { var t = /^[^<>]*$/; return t.test(e) } function isNullOrEmpty(e) { return null == e || "" == e ? !0 : !1 } function checkOfferPrice(e) { var t = e.value; return /^(\$)?([0-9]+|[0-9]{1,3}(,[0-9]{3})*)$/.test(t) ? !0 : !1 } function clearDefaultText(e) { $.each(e, function () { var e = $("#" + this); e.length > 0 && e.val() == e.attr("title") && e.val("") }) } function repopulateDefaultText(e) { $.each(e, function () { var e = $("#" + this); e.length > 0 && 0 == e.val().length && e.val(e.attr("title")) }) } function RightHandPageWrapperHeigth() { $("#LeftHandPageWrapperBox").height() > $("#RightHandPageWrapperBox").height() ? $("#RightHandPageWrapperBox").height($("#LeftHandPageWrapperBox").height()) : $("#LeftHandPageWrapperBox").height($("#RightHandPageWrapperBox").height()) } function SwitchBodyStyleTab(e, t, a) { $("#NewVehicleMainTabContent .BodyStyle").hide(), 1 == e ? $("#NewVehicleMainTabContent .BodyStyle").show() : $("#NewVehicleMainTabContent .BodyStyle" + e).show() } function ValidatefirstOrLastName(e, t) { var a = e.val(); if (a = $.trim(a), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (a.length > 0) { if (!metaCharacters.test(e.val())) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidateText(e, t) { var a = e.val(); if (a = $.trim(a), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (a.length > 0) { if (!metaCharacters.test(e.val())) return RemoveErrorHint(t), AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidateEmail(e, t) { var a = e.val(); if (a = $.trim(a), a.length > 0) { if (checkEmailStr(a)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidatePhone(e, t) { var a = ""; if (null != e.val() && (a = e.val().replace(/ /g, "").replace(/-/g, "").replace(/\(/g, "").replace(/\)/g, "")), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (a.length >= 8) { if (IsPhoneNumberValid(a) && !metaCharacters.test(a)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidateVIN(e, t) { var a = e, n = /\w{17}/, r = ""; if (null != e.val() && (r = e.val().replace(/ /g, "").replace(/-/g, "").replace(/\(/g, "").replace(/\)/g, "")), e.hasClass("requiredInput") && 0 == r.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == r.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (0 == r.length || 17 == r.length) { if (n.test(a.val()) && !metaCharacters.test(r)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidateYear(e, t) { var a = ""; if (null != e.val() && (a = e.val().replace(/ /g, "").replace(/-/g, "").replace(/\(/g, "").replace(/\)/g, "")), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (0 == a.length || 4 == a.length) { if (/^[-+]?\d{1,14}(\.\d{1,4})?$/.test(a) && !metaCharacters.test(a)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidateMileage(e, t) { var a = ""; if (null != e.val() && (a = e.val().replace(/ /g, "").replace(/-/g, "").replace(/\(/g, "").replace(/\)/g, "")), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (a.length > 0 && a.length < 64) { if (/^[-+]?\d{1,14}(\.\d{1,4})?$/.test(a) && !metaCharacters.test(a)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function ValidatePayOffBalance(e, t) { var a = ""; if (null != e.val() && (a = e.val().replace(/ /g, "").replace(/-/g, "").replace(/\(/g, "").replace(/\)/g, "")), e.hasClass("requiredInput") && 0 == a.length) return AddErrorHint(t), !1; if (!e.hasClass("requiredInput") && 0 == a.length) return RemoveErrorHint(t), RemoveValidHint(t), !0; if (0 == a.length || a.length < 64) { if (/^\d+$/.test(a) && !metaCharacters.test(a)) return AddValidHint(t), !0; AddErrorHint(t) } else AddErrorHint(t); return !1 } function isValidZipCode(e) { return zipCodePattern[country].test(e) } function ValidateZip(e, t) { var a = ""; return null != e.val() && (a = e.val()), e.hasClass("requiredInput") && 0 == a.length ? (AddErrorHint(t), !1) : e.hasClass("requiredInput") || 0 != a.length ? zipCodePattern[country].test(a) && !metaCharacters.test(a) ? (AddValidHint(t), !0) : (AddErrorHint(t), !1) : (RemoveErrorHint(t), RemoveValidHint(t), !0) } function AddErrorHint(e) { e.removeClass("info"), e.removeClass("valid"), e.addClass("error"), e.addClass("errorClass"), e.removeClass("infoImg"), e.addClass("errorImg") } function AddValidHint(e) { e.removeClass("info"), e.removeClass("error"), e.removeClass("errorClass"), e.removeClass("infoImg"), e.removeClass("errorImg"), e.addClass("valid") } function RemoveErrorHint(e) { e.removeClass("error"), e.removeClass("errorClass"), e.removeClass("errorImg") } function RemoveValidHint(e) { e.removeClass("valid") } function pause(e) { for (var t = new Date; new Date - t <= e;); } function showTranslatePopup() { isOpenedTranslatePopup ? ($("#translatePopup").hide(), isOpenedTranslatePopup = !1) : ($("#translatePopup").show(), isOpenedTranslatePopup = !0) } function openWindowCenterForNids2(e, t, a, n) { _width = a, _height = n; var r = "", i = a - 23; (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) && (r = (window.innerWidth - a) / 2); var o = '<div class="ClosePopupBtnNids2" style="left:' + i + 'px" onmouseover="this.className=\'ClosePopupBtnNids2_hover\'" onmouseout="this.className=\'ClosePopupBtnNids2\'"><b></b></div><iframe src="" frameborder="0" scrolling="no" width="' + a + '" height="' + n + '"></iframe>'; _popupObject = $('<div id="PopUpContainer"></div>').modal({ zIndex: 2e4, close: !0, fixed: !1, containerCss: { width: _width, height: _height }, containerId: "PopupLoaderContainer", autoPosition: !0, position: [, r] }), $("#PopUpContainer").html(o), OpeniFrameGADecorated("#PopUpContainer iframe", e), $("#simplemodal-overlay, #PopUpContainer .ClosePopupBtnNids2").bind("click.simplemodal", function (e) { e.preventDefault(), _popupObject.close() }) } function OpenMediaViewerNIDS2(e) { TrackEvent("onLoad", 23, ""); var t = "true" == $.urlParam("plugin", _mediaViewerUrl); _mediaViewerUrl += (-1 != _mediaViewerUrl.indexOf("?") ? "&" : "?") + "tab=" + e; try { t ? mv2DetailStopSisterVideo(!1) : mv2DetailStopSisterVideo(!0), $(".mv2FlashVideoDiv").is("*") ? mv2DetailStopFlashVideo() : mv2DetailVideoPlayer.pause() } catch (a) { } if (t) return void window.open(_mediaViewerUrl, "_blank"); var n = 0, r = ""; (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) && (n = 1, r = window.innerWidth ? window.innerWidth : document.all ? document.body.offsetWidth : null), _popupObject = $('<div id="mv2Container"><div class="mv2ClosePopupBtnOuter"><div class="mv2ClosePopupBtn" onmouseover="ToggleHover(this)" onmouseout="ToggleNormal(this)"><b></b><div class="cleaner"></div></div></div><div class="mv2ContainerInner"></div></div>').modal({ zIndex: 31e3, close: !0, fixed: !0, containerCss: { width: r }, containerId: "mv2PopupLoaderContainer", position: [1, n], opacity: 85, onClose: function () { window.onresize = null, $("#SisterVideoContainer iframe:visible").length > 0 && last_played_sister_video_src.length > 0 && $("#SisterVideoContainer iframe:visible").attr("src", last_played_sister_video_src), $("#mv2ContentVideo").attr("src", ""), _popupObject.close() } }), $("#simplemodal-overlay, #mv2Container .mv2ClosePopupBtn").bind("click.simplemodal", function (e) { e.preventDefault(), _popupObject.close() }), $.ajax({ type: "POST", url: _mediaViewerUrl + "&popup=true", success: function (e) { var t = e.substring(e.indexOf("<body>") + 6, e.indexOf("</body>")); $("#mv2Container .mv2ContainerInner").html(t), MV2ResizeWindow(), window.onresize = function () { MV2ResizeWindow() } }, error: function (e, t) { $("#mv2Container .mv2ContainerInner").html('<div style="height:200px">Error occured while loading content.</div>') } }) } function makeUnselectableIERecursive(e) { 1 == e.nodeType && e.setAttribute("unselectable", "on"); for (var t = e.firstChild; t;) makeUnselectableIERecursive(t), t = t.nextSibling } function openDropDown(e) { var t = document.getElementById("hdnSizeY" + e).value, a = document.getElementById("hdnMaxDropDownheight" + e).value, n = parseInt(document.getElementById("hdnDdCount" + e).value), r = document.getElementById("hdnRowSize" + e).value * (n > 0 ? n : 1); "dropDownClosed" == document.getElementById(e).className ? (CloseAllDropDowns(), document.getElementById(e).className = "dropDownOpened", document.getElementById(e).style.height = a + "px", document.getElementById("dropDownInnerText" + e).style.height = a + "px", document.getElementById("leftBg" + e).style.height = r + "px", document.getElementById("rightBg" + e).style.height = r + "px", document.getElementById("initialArrow" + e).style.display = "none", document.getElementById("inlineArrow" + e).style.display = "block", document.getElementById("hiddenArrow" + e).style.display = "inline", document.getElementById("dropDownValuesList" + e).style.display = "block", document.getElementById("dropDownValuesList" + e).style.top = "-3px", document.getElementById(e).parentNode.parentNode.style.zIndex = "20000", document.getElementById("initialLabel" + e).style.display = "none", r - a > 0 && (document.getElementById("scrollContainer" + e).style.top = document.getElementById("inlineArrow" + e).offsetTop + parseInt(t) + 6 + "px", document.getElementById("scrollContainer" + e).style.left = document.getElementById("inlineArrow" + e).offsetLeft - 3 + "px"), InitDropDownScroller(e), $("#hdnDdMouseOverFlag" + e).val(!0)) : CloseDropDown(e), $("div", ".dropDownClass").addClass("unselectable") } function CloseDropDown(e) { SetSrrollerToDefaultPosition(e), clearTimeout(closeTimeOutID), $("#hdnDdMouseOverFlag" + e).val(!1); var t = document.getElementById("hdnSizeY" + e).value; document.getElementById(e).className = "dropDownClosed", document.getElementById(e).style.height = t + "px", document.getElementById("dropDownInnerText" + e).style.height = t + "px", document.getElementById("leftBg" + e).style.height = t + "px", document.getElementById("rightBg" + e).style.height = t + "px", document.getElementById("inlineArrow" + e).style.display = "none", document.getElementById("initialArrow" + e).style.display = "block", document.getElementById("hiddenArrow" + e).style.display = "none", document.getElementById("dropDownValuesList" + e).style.display = "none", document.getElementById("initialLabel" + e).style.display = "block", document.getElementById("initialLabel" + e).style.backgroundColor = constClosedBgColor, document.getElementById("initialLabel" + e).style.color = constClosedTextColor, document.getElementById(e).parentNode.parentNode.style.zIndex = "0", void 0 != selectedValue && -1 != selectedValue.indexOf(e) ? document.getElementById("initialLabel" + e).childNodes[0].data = document.getElementById(selectedValue).childNodes[0].data : null != $(".selected" + e).html() && (document.getElementById("initialLabel" + e).childNodes[0].data = $(".selected" + e).html()), moveState = !1, $("div", ".dropDownClass").removeClass("unselectable") } function OnClickDdValue(e, t) { var a = "initialLabel" + t, n = e; e.split("|"); if ("True" == document.getElementById("hdnIsAppleDevice").value) document.getElementById("ddSelected" + t).value = "[" + e + "]:[" + document.getElementById(n).childNodes[0].textContent + "]"; else { document.getElementById("hdnSizeY" + t).value; void 0 != selectedValue && -1 != e.indexOf(ddSelected) && (document.getElementById(selectedValue).style.backgroundColor = constClosedBgColor, document.getElementById(selectedValue).style.color = constClosedTextColor, document.getElementById(selectedValue).className = document.getElementById(selectedValue).className.replace(" selected" + t, "")), $(".selected" + t).css("background-color", constClosedBgColor), $(".selected" + t).css("color", constClosedTextColor), document.getElementById(e).style.backgroundColor = constOpenedBgColor, document.getElementById(e).style.color = constOpenedTextColor, document.getElementById(e).className += " selected" + t, selectedValue = e, ddSelected = t, document.getElementById("ddSelected" + t).value = "[" + e + "]:[" + document.getElementById(n).childNodes[0].textContent + "]", document.getElementById(a).childNodes[0].data = document.getElementById(n).childNodes[0].data, CloseDropDown(t) } } function InitDropDownScroller(e) { var t = parseInt($("#hdnMaxValuesInDropDown" + e).val()), a = $("#dropDownValuesList" + e).children(":visible").length; if (HasBeenScrollInitialized(e)) return void (t > a && DropDownScrollerDestroy(e)); if (a > t) { var n = a - t; $("#scrollBox" + e).slider({ range: "min", value: n, min: 0, max: n, orientation: "vertical", step: 1, slide: function (t, a) { MoveDropDownList(e, a.value) } }), $("#dropDownValuesList" + e).mousewheel(function (t, a) { HasBeenScrollInitialized(e) && (t.preventDefault(), 0 > a ? DdScrollDown(e) : DdScrollUp(e)) }) } } function DropDownScrollerDestroy(e) { HasBeenScrollInitialized(e) && $("#scrollBox" + e).slider("destroy") } function HasBeenScrollInitialized(e) { return $("#" + e + " .ui-slider-handle").length > 0 } function SetSrrollerToDefaultPosition(e) { if (HasBeenScrollInitialized(e)) { var t = $("#scrollBox" + e).slider("option", "max"); $("#dropDownValuesList" + e).css("top", "-3px"), $("#scrollBox" + e).slider("value", t) } } function DdScrollDown(e) { if (HasBeenScrollInitialized(e)) { var t = $("#scrollBox" + e).slider("value"), a = $("#scrollBox" + e).slider("option", "min"); t > a && ($("#scrollBox" + e).slider("value", t - 1), MoveDropDownList(e)) } } function DdScrollUp(e) { if (HasBeenScrollInitialized(e)) { var t = $("#scrollBox" + e).slider("value"), a = $("#scrollBox" + e).slider("option", "max"); a > t && ($("#scrollBox" + e).slider("value", t + 1), MoveDropDownList(e)) } } function MoveDropDownList(e, t) { var a = parseInt($("#hdnRowSize" + e).val()), n = parseInt($("#scrollBox" + e).slider("value")), r = $("#scrollBox" + e).slider("option", "max"); void 0 != t && (n = t), $("#dropDownValuesList" + e).css("top", -3 - (r - n) * a) } function CloseAllDropDowns() { var e = $(".dropDownOpened"); e.each(function () { CloseDropDown($(this).attr("id")) }) } function MouseOutDropDown(e) { $("#" + e).hasClass("dropDownOpened") && ($("#hdnDdMouseOverFlag" + e).val(!1), clearTimeout(closeTimeOutID), closeTimeOutID = setTimeout(function () { "true" != $("#hdnDdMouseOverFlag" + e).val() && CloseDropDown(e) }, hideTimeDelay)) } function MouseOverDropDown(e) { $("#" + e).hasClass("dropDownOpened") && $("#hdnDdMouseOverFlag" + e).val(!0) } function OnHoverDdValue(e) { ("rgb(255, 255, 255)" == document.getElementById(e).style.backgroundColor || "" == document.getElementById(e).style.backgroundColor || document.getElementById(e).style.backgroundColor == constOnMouseOutBgColor.toLowerCase()) && (document.getElementById(e).style.backgroundColor = constOnHoverBgColor) } function OnMouseOutDdValue(e) { ("rgb(204, 204, 204)" == document.getElementById(e).style.backgroundColor || document.getElementById(e).style.backgroundColor == constOnHoverBgColor.toLowerCase()) && (document.getElementById(e).style.backgroundColor = constOnMouseOutBgColor) } function ReinitializeDropDown(e, t, a, n) { var r, i = [], o = document.getElementById("hdnFontSize" + e).value, c = document.getElementById("hdnSizeY" + e).value, s = document.getElementById("hdnOnClick" + e).value, l = document.getElementById("hdnInnerHtml" + e).value; if ("" != t && (i = t.split(a)), "True" == document.getElementById("hdnIsAppleDevice").value) { var d = '<option id="defaultValue' + e + '" value="' + l + '">' + l + "</option> "; if ("" != t) for (var h = 0; h < i.length; h++) r = i[h].split(n), d += '<option id="' + r[1].replace("&apos;", "").replace("'", "") + "|" + r[0] + "|" + e + '">' + r[1] + "</option> "; document.getElementById("dropDownValuesList" + e).innerHTML = d } else { DropDownScrollerDestroy(e); var d = '<div class="dropDownValue" style="font-size:' + o + '" id="defaultValue' + e + '" onmouseover="OnHoverDdValue(\'defaultValue' + e + "')\" onmouseout=\"OnMouseOutDdValue('defaultValue" + e + "')\" onmouseup=\"OnClickDdValue('defaultValue" + e + "','" + e + '\')" onclick="' + s + '">' + l + "</div> "; if ("" != t) for (var h = 0; h < i.length; h++) r = i[h].split(n), d += '<div class="dropDownValue" style="font-size:' + o + '" id="' + r[1].replace("&apos;", "").replace("'", "") + "|" + r[0] + "|" + e + '" onmouseover="OnHoverDdValue(\'' + r[1].replace("&apos;", "").replace("'", "") + "|" + r[0] + "|" + e + "')\" onmouseout=\"OnMouseOutDdValue('" + r[1].replace("&apos;", "").replace("'", "") + "|" + r[0] + "|" + e + "')\" onmouseup=\"OnClickDdValue('" + r[1].replace("&apos;", "").replace("'", "") + "|" + r[0] + "|" + e + "','" + e + '\')" onclick="' + s + '">' + r[1] + "</div> "; document.getElementById("dropDownValuesList" + e).innerHTML = d, document.getElementById("hdnDdCount" + e).value = i.length + 1, document.getElementById("hdnHiddenValues" + e).value = parseInt(document.getElementById("hdnDdCount" + e).value) - parseInt(document.getElementById("hdnMaxValuesInDropDown" + e).value), document.getElementById("hdnHiddenValues" + e).value < 1 ? document.getElementById("hdnMaxDropDownheight" + e).value = document.getElementById("hdnRowSize" + e).value * parseInt(document.getElementById("hdnDdCount" + e).value) : document.getElementById("hdnMaxDropDownheight" + e).value = parseInt(document.getElementById("hdnMaxValuesInDropDown" + e).value) * document.getElementById("hdnRowSize" + e).value, document.getElementById("hiddenArrow" + e).style.marginTop = parseInt(document.getElementById("hdnMaxDropDownheight" + e).value) - (parseInt(c) - parseInt(document.getElementById("hdnCornerSize" + e).value)) + "px" } } function SetDropDownToDefualtValue(e) { var t = $("#defaultValue" + e).html(); $("#initialLabel" + e).html(t), $("#ddSelected" + e).val("") } function getDropDownValue(e) { return "" == e || e.indexOf("[id]:[value]") >= 0 || e.indexOf("default") >= 0 ? e = "" : e.split("]:[")[1].replace("]", "") } function getDropDownIntValue(e) { if ("" == e || e.indexOf("[id]:[value]") >= 0 || e.indexOf("default") >= 0) return e = ""; var t = e.substring(1, e.indexOf("]")).split("|"); return void 0 != t[1] && t[1] > 0 ? t[1] : e = "" } function getConditionDropDownIntValue(e) { if ("" == e || e.indexOf("[id]:[value]") >= 0 || e.indexOf("default") >= 0) return e = 0; var t = e.substring(1, e.indexOf("]")).split("|"); return void 0 != t[1] && t[1] > 0 ? t[1] : e = 0 } function getDropDownID(e) { if ("" == e || e.indexOf("[id]:[value]") >= 0 || e.indexOf("default") >= 0) return e = ""; var t = e.substring(1, e.indexOf("]")).split("|"); return void 0 != t[1] && t[1] > 0 ? t[1] : 0; var t } function isDropDownSelectedDefaultValue(e) { return $("#initialLabel" + e).html() == $("#defaultValue" + e).html() } function OnChangeDD(e, t) { var a = $("#" + e + " option:selected").attr("id"); OnClickDdValue(a, t) } function GetDefaultLabel(e, t) { var a = $("#required_" + e).val(); return null != a && "true" == a ? t + "*" : t } function eBizInputTextCheckDefault(e, t, a) { if (a) { var n = $.trim($("textarea#" + e).val()); "" == n || n == t ? ($("#" + e).css("color", "#666666"), $("textarea#" + e).val(t), $("#hidden_" + e).val("")) : $("#hidden_" + e).val(n) } else { var n = $.trim($("#" + e).val()); "" == n || n == t ? ($("#" + e).css("color", "#666666"), $("#" + e).val(t), $("#hidden_" + e).val("")) : $("#hidden_" + e).val(n) } } function renderTweet(e) { $(".tweetdiv").html('<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text=" "></a>'), ExecuteTwitterCode(e) } function ExecuteTwitterCode(e) { window.twttr = function (e, t, a) { var n, r, i = e.getElementsByTagName(t)[0]; if (!e.getElementById(a)) return r = e.createElement(t), r.id = a, r.src = "https://platform.twitter.com/widgets.js", i.parentNode.insertBefore(r, i), window.twttr || (n = { _e: [], ready: function (e) { n._e.push(e) } }) }(document, "script", "twitter-wjs-1"), twttr.ready(function (t) { t.events.bind("click", function () { TrackEvent("onClick", e, "") }) }) } function renderFbLike(e, t, a) { renderFbRoot(e, a), $(".fblikediv").html('<fb:like href="' + t + '" send="false" layout="button_count" show_faces="false" font="arial"></fb:like>'), parseFbButtons("fblikediv") } function parseFbButtons(e) { try { FB.XFBML.parse(document.getElementsByClassName(e)[0]) } catch (t) { } } function renderFbRoot(e, t) { 0 == $("#fb-root").length && ($("body").prepend('<div id="fb-root"></div>'), ExecuteFacebookCode(e, t)) } function ExecuteFacebookCode(e, t) { jQuery.getScript(e, function () { FB.init({ appId: "269706819708446", status: !0, cookie: !0, xfbml: !0 }), FB.Event.subscribe("edge.create", function (e) { TrackEvent("onClick", t, "") }) }) } function renderGplus(e, t) { $(".gplusdiv").html('<g:plusone annotation="none" callback="GooglePlusOneClicked"></g:plusone>'), ExecuteGooglePlusCode(e, t) } function ExecuteGooglePlusCode(e, t) { _googlePlusOneLinkTypeEnum = t, jQuery.getScript(e) } function GooglePlusOneClicked(e) { TrackEvent("onClick", _googlePlusOneLinkTypeEnum, "") } function renderPinItButton(e, t) { $(".pinitdiv").html('<a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" data-pin-color="red"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_red_20.png" /></a>'), ExecutePinItCode(e, t) } function ExecutePinItCode(e, t) { $(".pinitdiv").bind("click", function () { TrackEvent("onClick", t, "") }), jQuery.getScript(e) } function ChangePreferredContactBySelect(e, t, a) { var n = e; n.length > 0 && n.change(function () { switch (n.val()) { case "1": t.show(), a.hide(); break; case "2": t.hide(), a.show() } }) } function ChangePreferredContactWithImageBySelect(e, t, a, n, r) {
     var i = e; i.length > 0 && i.change(function () {
