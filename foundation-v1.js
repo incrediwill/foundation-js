@@ -3753,6 +3753,28 @@ var FOUNDATION = FOUNDATION || {};
 		 
 	});
 	
+    jQuery(document).ready(function($) {
+      var ocImages = $(".similar-vehicles");
+      ocImages.owlCarousel({
+        margin: 20,
+          nav: true,
+        navText: ['<i class="icon-angle-left"></i>','<i class="icon-angle-right"></i>'],
+        loop: true,
+        center: true,
+        autoHeight: false,
+        autoplay: false,
+        autoplayHoverPause: true,
+        dots: true,
+        navRewind: true,
+        responsive:{
+          0:{ items:3 },
+          600:{ items:3 },
+          992:{ items:4 },
+          1200:{ items:5 }
+        }
+      });
+    });
+	
 
 	// Featured Vehicles Swiper Function 
 	// Incorporate into main functions... someday...
