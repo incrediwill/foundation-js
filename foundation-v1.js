@@ -2322,7 +2322,8 @@ var FOUNDATION = FOUNDATION || {};
 						ytbgStart = element.attr('data-start'),
 						ytbgStop = element.attr('data-stop'),
 						ytbgAutoPlay = element.attr('data-autoplay'),
-						ytbgFullScreen = element.attr('data-fullscreen');
+						ytbgFullScreen = element.attr('data-fullscreen'),
+						ytbgShowControls = element.attr('data-showControls');
 
 					if( ytbgMute == 'false' ) { ytbgMute = false; } else { ytbgMute = true; }
 					if( !ytbgRatio ) { ytbgRatio = '16/9'; }
@@ -2336,6 +2337,7 @@ var FOUNDATION = FOUNDATION || {};
 					if( !ytbgStop ) { ytbgStop = 0; }
 					if( ytbgAutoPlay == 'false' ) { ytbgAutoPlay = false; } else { ytbgAutoPlay = true; }
 					if( ytbgFullScreen == 'true' ) { ytbgFullScreen = true; } else { ytbgFullScreen = false; }
+					if( ytbgShowControls == 'false' ) { ytbgFullScreen = false; } else { ytbgFullScreen = true; }
 
 					element.mb_YTPlayer({
 						videoURL: ytbgVideo,
@@ -2352,7 +2354,8 @@ var FOUNDATION = FOUNDATION || {};
 						autoplay: ytbgAutoPlay,
 						realfullscreen: ytbgFullScreen,
 						showYTLogo: false,
-						showControls: false
+						stopMovieOnBlur: false,
+						showControls: ytbgShowControls
 					});
 				});
 			}
@@ -4133,3 +4136,10 @@ function CalculatorPopulateField(obj, defaultValue) {
 		obj.value = defaultValue;
 	}
 }
+
+
+function plyrInit() {
+	plyr.setup('.js-player');	
+}
+
+plyrInit();
