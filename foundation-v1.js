@@ -2322,8 +2322,7 @@ var FOUNDATION = FOUNDATION || {};
 						ytbgStart = element.attr('data-start'),
 						ytbgStop = element.attr('data-stop'),
 						ytbgAutoPlay = element.attr('data-autoplay'),
-						ytbgFullScreen = element.attr('data-fullscreen'),
-						ytbgShowControls = element.attr('data-showControls');
+						ytbgFullScreen = element.attr('data-fullscreen');
 
 					if( ytbgMute == 'false' ) { ytbgMute = false; } else { ytbgMute = true; }
 					if( !ytbgRatio ) { ytbgRatio = '16/9'; }
@@ -2337,7 +2336,6 @@ var FOUNDATION = FOUNDATION || {};
 					if( !ytbgStop ) { ytbgStop = 0; }
 					if( ytbgAutoPlay == 'false' ) { ytbgAutoPlay = false; } else { ytbgAutoPlay = true; }
 					if( ytbgFullScreen == 'true' ) { ytbgFullScreen = true; } else { ytbgFullScreen = false; }
-					if( ytbgShowControls == 'false' ) { ytbgFullScreen = false; } else { ytbgFullScreen = true; }
 
 					element.mb_YTPlayer({
 						videoURL: ytbgVideo,
@@ -2355,7 +2353,7 @@ var FOUNDATION = FOUNDATION || {};
 						realfullscreen: ytbgFullScreen,
 						showYTLogo: false,
 						stopMovieOnBlur: false,
-						showControls: ytbgShowControls
+						showControls: false
 					});
 				});
 			}
@@ -4141,5 +4139,16 @@ function CalculatorPopulateField(obj, defaultValue) {
 function plyrInit() {
 	plyr.setup('.js-player');	
 }
-
 plyrInit();
+ 
+jQuery(function() {
+	$("#video-slider-mute").click(function () {
+	    if (!$(this).hasClass('video-muted')) {
+	        $('.yt-bg-player.mb_YTPlayer').YTPSetVolume(100);
+	        $(this).addClass('video-muted');
+	    } else {
+	        $('.yt-bg-player.mb_YTPlayer').YTPSetVolume(0);
+	        $(this).removeClass('video-muted');
+	    }
+	});
+});
