@@ -4142,7 +4142,7 @@ function plyrInit() {
 plyrInit();
  
 jQuery(function() {
-	$("#video-slider-mute").click(function () {
+	$('#video-slider-mute').click(function () {
 	    if (!$(this).hasClass('video-muted')) {
 	        $('.yt-bg-player.mb_YTPlayer').YTPSetVolume(100);
 	        $(this).addClass('video-muted');
@@ -4150,5 +4150,14 @@ jQuery(function() {
 	        $('.yt-bg-player.mb_YTPlayer').YTPSetVolume(0);
 	        $(this).removeClass('video-muted');
 	    }
+	});
+	$('#video-slider-view-video').click(function () {
+		$('.yt-bg-player.mb_YTPlayer').YTPTogglePlay();
+		$('.mfp-close').attr("id","mfp-close-button");
+		console.log("Pause YT Video");
+		$('#mfp-close-button').click(function () {
+			$('.yt-bg-player.mb_YTPlayer').YTPTogglePlay();
+				console.log("Play YT Video");
+		});		
 	});
 });
