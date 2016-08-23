@@ -4151,13 +4151,14 @@ jQuery(function() {
 	        $(this).removeClass('video-muted');
 	    }
 	});
-	$('#video-slider-view-video').click(function () {
-		$('.yt-bg-player.mb_YTPlayer').YTPTogglePlay();
-		$('.mfp-close').attr("id","mfp-close-button");
-		console.log("Pause YT Video");
-		$('#mfp-close-button').click(function () {
-			$('.yt-bg-player.mb_YTPlayer').YTPTogglePlay();
-				console.log("Play YT Video");
-		});		
+	$('#slider #video-slider-view-video').click(function () {
+		$('#slider .yt-bg-player.mb_YTPlayer').YTPTogglePlay();
+		$('.mfp-close').attr('id','mfp-close-button');
+		$('.mfp-iframe-holder').attr('id','mfp-iframe-holder');
+		//console.log("Pause YT Video");
+		$('#mfp-close-button, #mfp-iframe-holder').click(function () {
+			$('#slider .yt-bg-player.mb_YTPlayer').YTPTogglePlay();
+			//console.log("Play YT Video");
+		});	
 	});
 });
