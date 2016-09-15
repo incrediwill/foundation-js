@@ -2338,6 +2338,7 @@ var FOUNDATION = FOUNDATION || {};
 					if( ytbgFullScreen == 'true' ) { ytbgFullScreen = true; } else { ytbgFullScreen = false; }
 
 					element.mb_YTPlayer({
+						align: "center,center",
 						videoURL: ytbgVideo,
 						mute: ytbgMute,
 						ratio: ytbgRatio,
