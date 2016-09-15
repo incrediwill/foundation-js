@@ -4163,3 +4163,21 @@ jQuery(function() {
 		});	
 	});
 });
+
+jQuery(function() {					
+			
+	function mobileHeaderTrigger() {
+		$(".mobile-header-trigger").click(function(){  
+		    var $siblingDivs = $($(this).siblings().find("div"));
+		    
+		    $siblingDivs.each(function(){
+		        $($(this).data("mobile-section")).slideUp("slow");
+		    });
+		    
+		    $($(this).find("div").data("mobile-section")).slideToggle("slow");
+		});	
+	}		
+	
+	mobileHeaderTrigger();
+								
+});
