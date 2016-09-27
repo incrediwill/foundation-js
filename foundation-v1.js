@@ -435,7 +435,7 @@ var FOUNDATION = FOUNDATION || {};
 						image: {
 							verticalFit: true,
 							titleSrc: function(item) {
-								return '<h4 class="mfp-title nomargin">' + item.el.attr('data-lightbox-title') + '</h4>' + '<h5 class="mfp-title">' + item.el.attr('data-lightbox-subtitle') + '</h5>' + '<p class="mfp-description">' + item.el.attr('data-lightbox-description') + '</p>';
+								return '<h4 class="mfp-title bottommargin-xs">' + item.el.attr('data-lightbox-title') + '</h4>' + '<h5 class="mfp-title">' + item.el.attr('data-lightbox-subtitle') + '</h5>' + '<p class="mfp-description">' + item.el.attr('data-lightbox-description') + '</p>';
 							}							
 						},
 						gallery: {
