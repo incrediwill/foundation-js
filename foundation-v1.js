@@ -4184,3 +4184,41 @@ jQuery(function() {
 	mobileHeaderTrigger();
 								
 });
+
+jQuery(function() {
+	var photoListColumns = $('#photolist-images').attr('data-photolist-columns');
+	switch (photoListColumns) { 
+
+		case '1': 							
+			$("#photolist-images > .container > div").each(function(){ 
+				$(this).attr('class', 'col-md-12');	
+			});
+			break;
+
+		case '2':
+			$("#photolist-images > .container > div").each(function(){ 
+				$(this).attr('class', 'col-sm-6 col-md-6');									
+			});
+			$("#photolist-images > .container > div:nth-child(2)").after("<div class='clearfix'></div>");							
+			break;
+
+		case '3': 
+			$("#photolist-images > .container > div").each(function(){ 
+				$(this).attr('class', 'col-sm-6 col-md-4');	
+			});
+			$("#photolist-images > .container > div:nth-child(3)").after("<div class='hidden-sm clearfix'></div>");
+			break;
+
+		case '4': 
+			$("#photolist-images > .container > div").each(function(){ 
+				$(this).attr('class', 'col-sm-6 col-md-3');	
+			});				
+			$("#photolist-images > .container > div:nth-child(4)").after("<div class='clearfix'></div>");																
+			break;											
+
+		default:
+	}					
+
+	$( "#photolist-images" ).show();
+
+});
