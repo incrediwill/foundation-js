@@ -433,9 +433,9 @@ var FOUNDATION = FOUNDATION || {};
 						fixedContentPos: true,
 						mainClass: 'mfp-no-margins mfp-fade', // class to remove default margin from left and right side
 						image: {
-							verticalFit: true
+							verticalFit: true,
 							titleSrc: function(item) {
-								return '<h3>' + item.el.attr('data-lightbox-title') + '</h3>' + '<p>' + item.el.attr('data-lightbox-description') + '</p>';
+								return '<h4 class="mfp-title nomargin">' + item.el.attr('data-lightbox-title') + '</h4>' + '<h5 class="mfp-title">' + item.el.attr('data-lightbox-subtitle') + '</h5>' + '<p class="mfp-description">' + item.el.attr('data-lightbox-description') + '</p>';
 							}							
 						},
 						gallery: {
