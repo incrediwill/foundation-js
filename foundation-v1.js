@@ -4199,21 +4199,21 @@ jQuery(function() {
 			$("#photolist-images > .container > div").each(function(){ 
 				$(this).attr('class', 'col-sm-6 col-md-6');									
 			});
-			$("#photolist-images > .container > div:nth-child(2)").after("<div class='clearfix'></div>");							
+			$("#photolist-images > .container > div:nth-child(2n)").after("<div class='clearfix'></div>");							
 			break;
 
 		case '3': 
 			$("#photolist-images > .container > div").each(function(){ 
-				$(this).attr('class', 'col-sm-6 col-md-4');	
+				$(this).attr('class', 'col-sm-4 col-md-4');	
 			});
-			$("#photolist-images > .container > div:nth-child(3)").after("<div class='hidden-sm clearfix'></div>");
+			$("#photolist-images > .container > div:nth-child(3n)").after("<div class='hidden-sm clearfix'></div>");
 			break;
 
 		case '4': 
 			$("#photolist-images > .container > div").each(function(){ 
 				$(this).attr('class', 'col-sm-6 col-md-3');	
 			});				
-			$("#photolist-images > .container > div:nth-child(4)").after("<div class='clearfix'></div>");																
+			$("#photolist-images > .container > div:nth-child(4n)").after("<div class='clearfix'></div>");																
 			break;											
 
 		default:
