@@ -395,6 +395,7 @@ var FOUNDATION = FOUNDATION || {};
 
 			var $lightboxImageEl = $('[data-lightbox="image"]'),
 				$lightboxGalleryEl = $('[data-lightbox="gallery"]'),
+			    	$lightboxGalleryPhotoListEl = $('[data-lightbox="gallery-photolist"]'),
 				$lightboxIframeEl = $('[data-lightbox="iframe"]'),
 				$lightboxInlineEl = $('[data-lightbox="inline"]'),
 				$lightboxAjaxEl = $('[data-lightbox="ajax"]'),
@@ -446,6 +447,40 @@ var FOUNDATION = FOUNDATION || {};
 					});
 				});
 			}
+			
+			if( $lightboxGalleryPhotoListEl.length > 0 ) {
+				$lightboxGalleryPhotoListEl.each(function() {
+					var element = $(this);
+
+					if( element.find('a[data-lightbox="gallery-item"]').parent('.clone').hasClass('clone') ) {
+						element.find('a[data-lightbox="gallery-item"]').parent('.clone').find('a[data-lightbox="gallery-item"]').attr('data-lightbox','');
+					}
+
+					if( element.find('a[data-lightbox="gallery-item"]').parents('.cloned').hasClass('cloned') ) {
+						element.find('a[data-lightbox="gallery-item"]').parents('.cloned').find('a[data-lightbox="gallery-item"]').attr('data-lightbox','');
+					}
+
+					element.magnificPopup({
+						delegate: 'a[data-lightbox="gallery-item"]',
+						type: 'image',
+						closeOnContentClick: true,
+						closeBtnInside: false,
+						fixedContentPos: true,
+						mainClass: 'mfp-no-margins mfp-fade', // class to remove default margin from left and right side
+						image: {
+							verticalFit: true,
+							titleSrc: function(item) {
+								return '<h4 class="mfp-title bottommargin-xs">' + item.el.attr('data-lightbox-title') + '</h4>' + '<h5 class="mfp-title">' + item.el.attr('data-lightbox-subtitle') + '</h5>' + '<p class="mfp-description">' + item.el.attr('data-lightbox-description') + '</p>';
+							}							
+						},
+						gallery: {
+							enabled: true,
+							navigateByImgClick: true,
+							preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+						}
+					});
+				});
+			}						
 
 			if( $lightboxIframeEl.length > 0 ) {
 				$lightboxIframeEl.magnificPopup({
