@@ -4191,13 +4191,13 @@ jQuery(function() {
 	    }
 	});
 	$('#slider #video-slider-view-video').click(function () {
-		$('#slider .yt-bg-player.mb_YTPlayer').YTPTogglePlay();
+		$('#slider .yt-bg-player.mb_YTPlayer').YTPPause();
 		$('.mfp-close').attr('id','mfp-close-button');
 		$('.mfp-iframe-holder').attr('id','mfp-iframe-holder');
-		//console.log("Pause YT Video");
+		console.log("Pause YT Video");
 		$('#mfp-close-button, #mfp-iframe-holder').click(function () {
-			$('#slider .yt-bg-player.mb_YTPlayer').YTPTogglePlay();
-			//console.log("Play YT Video");
+			$('#slider .yt-bg-player.mb_YTPlayer').YTPPlay();
+			console.log("Play YT Video");
 		});	
 	});
 });
