@@ -4256,14 +4256,56 @@ jQuery(function() {
 });
 
 jQuery(function() {					
-			
-	function oemInstalledOptions() {
-		var oemOptions = $('.srp-oem-options .options-description');
-		
-		oemOptions.html(oemOptions.html().toLowerCase());
-		$('.srp-oem-options .options-description').addClass('capitalize');
-	}
 	
-	oemInstalledOptions();
+	if ($(".srp-oem-options").length) {
+
+		function oemInstalledOptions() {
+			var showChar = 200;
+			var ellipsestext = "...";
+			var moretext = "read more";
+			var lesstext = "read less";
+
+			$('.srp-oem-options .options-description').each(function() {
+				var oemOptions = $(this);
+				oemOptions.html(oemOptions.html().toLowerCase());
+				
+				$('.srp-oem-options .options-description').addClass('capitalize');
+
+				var content = $(this).html();
+
+				if(content.length > showChar) {
+					var checkSpace = content.substr(showChar-1, showChar - showChar +1);
+	            
+	                while (checkSpace != ' '){
+	                    showChar = showChar+1;
+	                    checkSpace = content.substr(showChar-1, showChar - showChar +1);
+	                }
+
+					var c = content.substr(0, showChar);
+					var h = content.substr(showChar, content.length - showChar);
+		
+					var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span style="display: none;">' + h + '</span> <a href="" class="morelink">' + moretext + '</a></span>';
+					
+					$(this).html(html);
+				}
+
+			});
+
+			$(".morelink").click(function(){
+				if($(this).hasClass("less")) {
+					$(this).removeClass("less");
+					$(this).html(moretext);
+				} else {
+					$(this).addClass("less");
+					$(this).html(lesstext);
+				}
+				$(this).parent().prev().toggle();
+				$(this).prev().toggle();
+				return false;
+			});
+
+		}
+		oemInstalledOptions();
+	}
 								
 });
