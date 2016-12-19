@@ -4254,3 +4254,16 @@ jQuery(function() {
 	$( "#photolist-images" ).show();
 
 });
+
+jQuery(function() {					
+			
+	function oemInstalledOptions() {
+		var oemOptions = $('.srp-oem-options .options-description');
+		
+		oemOptions.html(oemOptions.html().toLowerCase());
+		$('.srp-oem-options .options-description').addClass('capitalize');
+	}
+	
+	oemInstalledOptions();
+								
+});
