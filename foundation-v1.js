@@ -2551,7 +2551,12 @@ var FOUNDATION = FOUNDATION || {};
 					element.find('.acctitle').click(function(){
 						if( $(this).next().is(':hidden') ) {
 							element.find('.acctitle').removeClass('acctitlec').next().slideUp("normal");
-							$(this).toggleClass('acctitlec').next().slideDown("normal");
+							var clickTarget = $(this);
+							$(this).toggleClass('acctitlec').next().slideDown("normal", function(){
+								$('html,body').stop(true).animate({
+									'scrollTop': clickTarget.offset().top - ( FOUNDATION.initialize.topScrollOffset() - 40 )
+								}, 800, 'easeOutQuad' );
+							});
 						}
 						return false;
 					});
