@@ -3746,6 +3746,23 @@ var FOUNDATION = FOUNDATION || {};
 		e.stopPropagation();
 		e.preventDefault();
 	});
+	
+	// BMW TRANSLATE
+	$(document).on('click', function(event) {
+		if (!$(event.target).closest('#header-translate-dropdown').length) { $body.toggleClass('header-translate-dropdown-open', false); }
+	});
+
+	var $headerTranslateDropdown = $('#header-translate-dropdown'),
+		$body = $('body');
+		
+	$("#header-translate-dropdown-trigger").click(function(e){
+		$body.toggleClass('header-translate-dropdown-open');				
+		if ($body.hasClass('header-translate-dropdown-open')){
+			$headerTranslateDropdown.find('input').focus();
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	});	
 		
         // BS MODAL iOS FIX
         if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
