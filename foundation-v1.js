@@ -759,19 +759,12 @@ var FOUNDATION = FOUNDATION || {};
 		},
 
 		lazyLoad: function() {
-			var lazyLoadEl = $('[data-lazyload]');
-			if( lazyLoadEl.length > 0 ) {
-				lazyLoadEl.each( function(){
-					var element = $(this),
-						elementImg = element.attr( 'data-lazyload' );
-
-					//element.attr( 'src', 'images/blank.svg' ).css({ 'background': 'url(images/preloader.gif) no-repeat center center #FFF' });
-
-					element.appear(function () {
-						element.css({ 'background': 'none' }).removeAttr( 'width' ).removeAttr( 'height' ).attr('src', elementImg);
-					},{accX: 0, accY: 120},'easeInCubic');
-				});
-			}
+			$('.lazy').Lazy({
+			bind: "event",
+			effect: "fadeIn",
+			effectTime: 1000,
+			threshold: 0
+			});
 		},
 
 		topScrollOffset: function() {
@@ -2137,10 +2130,6 @@ var FOUNDATION = FOUNDATION || {};
 			FOUNDATION.widget.counter();
 			FOUNDATION.widget.roundedSkill();
 			FOUNDATION.widget.progress();
-			FOUNDATION.widget.twitterFeed();
-			FOUNDATION.widget.flickrFeed();
-			FOUNDATION.widget.instagramPhotos( '36286274.b9e559e.4824cbc1d0c94c23827dc4a2267a9f6b', 'b9e559ec7c284375bf41e9a9fb72ae01' );
-			FOUNDATION.widget.dribbbleShots( '01530280af335d298e756ed8ef786c8c4e92a50b88e53a185531b1a639e768b8' );
 			FOUNDATION.widget.navTree();
 			FOUNDATION.widget.textRotater();
 			FOUNDATION.widget.carousel();
