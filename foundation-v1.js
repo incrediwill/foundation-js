@@ -3488,25 +3488,28 @@ var FOUNDATION = FOUNDATION || {};
             });
         }
     
-	// Slide Disclaimer    
-	var elementOpenText = $('.slide-disclaimer-btn').attr('data-open-text');
-	var elementCloseText = $('.slide-disclaimer-btn').attr('data-close-text');
-	
-	//console.log (elementOpenText,elementCloseText);
-	
-	$('.slide-disclaimer-btn').append('<a href="#" class="slide-disclaimer-link">'+elementOpenText+'</a>');
-	
-	$('.slide-disclaimer').hide();
-	
-	$('.slide-disclaimer-link').click(function() {
-		 
-	    $(this).html( ($(this).parent().next('.slide-disclaimer').is(":visible")) ? elementOpenText : elementCloseText);
-	
-		$(this).parent().next('.slide-disclaimer').toggle();
-		 
-		return false;
-		 
+$(document).ready(function () {
+	$('body .hero:not(body .hero.cycle-sentinel)').each(function() {
+
+		if($(this).find('.slide-disclaimer-btn').length) {
+			var slideDisclaimerBtn = $(this).find('.slide-disclaimer-btn');
+			var elementOpenText = slideDisclaimerBtn.attr('data-open-text');
+			var elementCloseText = slideDisclaimerBtn.attr('data-close-text');
+
+			slideDisclaimerBtn.append('<a href="#" class="slide-disclaimer-link">'+elementOpenText+'</a>');
+
+			$('.slide-disclaimer').hide();
+
+			slideDisclaimerBtn.find('.slide-disclaimer-link').click(function() {
+				$(this).html( ($(this).parent().next('.slide-disclaimer').is(":visible")) ? elementOpenText : elementCloseText);
+				$(this).parent().next('.slide-disclaimer').toggle();
+
+				return false;
+			});
+	    }
+
 	});
+});
 	
     jQuery(document).ready(function($) {
       var ocImages = $(".similar-vehicles");
